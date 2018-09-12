@@ -46,6 +46,12 @@ const vueApp = new Vue({
 		},
 	},
 	mounted() {
+		// TODO: This is temporary to catch any obvious bugs with Vue port
+		window.addEventListener("error", function(e) {
+			console.error(e); // eslint-disable-line
+			vueApp.currentUserVisibleError = `JS error: ${e.message}. Please check devtools and report it in #thelounge`;
+		});
+
 		Vue.nextTick(() => window.vueMounted());
 	},
 	render(createElement) {
@@ -54,6 +60,11 @@ const vueApp = new Vue({
 		});
 	},
 });
+
+Vue.config.errorHandler = function(e) {
+	console.error(e); // eslint-disable-line
+	vueApp.currentUserVisibleError = `Vue error: ${e.message}. Please check devtools and report it in #thelounge`;
+};
 
 function findChannel(id) {
 	for (const network of vueApp.networks) {
