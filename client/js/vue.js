@@ -59,6 +59,9 @@ const vueApp = new Vue({
 	},
 });
 
+// Allow devtools in production while we're fleshing out Vue code
+Vue.config.devtools = true;
+
 Vue.config.errorHandler = function(e) {
 	console.error(e); // eslint-disable-line
 	vueApp.currentUserVisibleError = `Vue error: ${e.message}. Please check devtools and report it in #thelounge`;
